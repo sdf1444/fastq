@@ -16,6 +16,9 @@ def nucleotide_count(file):
     for line in f:
       if line.startswith("@"):  # if the line starts with "@", then it's a read header
         in_sequence = True  # set the flag to indicate that we're in a sequence
+      elif in_sequence:  # if we're in a sequence
+        if not line.startswith("+"):  # if the line doesn't start with "+", it's a sequence line
+          num_nucleotides += len(line.strip())  # add the length of the line to the nucleotide count
   
 
 if __name__ == "__main__":
