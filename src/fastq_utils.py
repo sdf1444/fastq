@@ -9,14 +9,32 @@ def sequence_count(file):
   num_sequences = len([line for line in file_contents.split("\n") if line.strip() != ""]) // 4
   return num_sequences
 
+def nucleotide_count(file):
+  with open(file) as f:
+    num_nucleotides = 0
+    in_sequence = False
+    for line in f:
+      if line.startswith("@"):  # This is a read header line
+        in_sequence = True
+      elif in_sequence:
+        if not line.startswith("+"):  # This is a sequence line
+          num_nucleotides += len(line.strip())
+        else:  # This is a quality score line
+          in_sequence = False
+  return num_nucleotides
+  
+
 if __name__ == "__main__":
   # Create an argument parser with a description and two arguments: the path to the FASTQ file and a flag to get the number of sequences
   parser = argparse.ArgumentParser(description="Get information about a FASTQ file")
   parser.add_argument("file", help="Path to FASTQ file")
   parser.add_argument("-s", "--sequences", action="store_true", help="Get the number of sequences in the file")
+  parser.add_argument("-n", "--nucleotides", action="store_true", help="Get the number of nucleotides in the file")
   # Parse the arguments
   args = parser.parse_args()
 
   # If the sequences flag was set, call the sequence_count function and print the result
   if args.sequences:
     print(sequence_count(args.file))
+  if args.nucleotides:
+    print(nucleotide_count(args.file))
