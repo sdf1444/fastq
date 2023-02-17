@@ -20,6 +20,4 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run tests
-      run: |
-        pytest tests/test_nucleotide_count.py
-        pytest tests/test_multiline_nucleotide_count.py
+      run: pytest
