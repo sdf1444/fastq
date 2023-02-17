@@ -12,16 +12,7 @@ def sequence_count(file):
 def nucleotide_count(file):
   with open(file) as f:
     num_nucleotides = 0
-    in_sequence = False
-    for line in f:
-      if line.startswith("@"):  # This is a read header line
-        in_sequence = True
-      elif in_sequence:
-        if not line.startswith("+"):  # This is a sequence line
-          num_nucleotides += len(line.strip())
-        else:  # This is a quality score line
-          in_sequence = False
-  return num_nucleotides
+    in_sequence = False  # flag to track if currently in a sequence
   
 
 if __name__ == "__main__":
